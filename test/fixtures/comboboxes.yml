@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cnpj: MyString
+  contract: MyString
+  campaign: MyString
+
+two:
+  cnpj: MyString
+  contract: MyString
+  campaign: MyString

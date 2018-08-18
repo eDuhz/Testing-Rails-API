@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180817124259) do
+ActiveRecord::Schema.define(version: 20180818213500) do
+
+  create_table "addresses", force: :cascade do |t|
+    t.string   "street"
+    t.string   "city"
+    t.integer  "combobox_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["combobox_id"], name: "index_addresses_on_combobox_id"
+  end
 
   create_table "comboboxes", force: :cascade do |t|
     t.string   "cnpj"
@@ -26,6 +35,14 @@ ActiveRecord::Schema.define(version: 20180817124259) do
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "phones", force: :cascade do |t|
+    t.string   "number"
+    t.integer  "combobox_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["combobox_id"], name: "index_phones_on_combobox_id"
   end
 
 end

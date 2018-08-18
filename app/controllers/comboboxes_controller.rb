@@ -5,12 +5,12 @@ class ComboboxesController < ApplicationController
   def index
     @comboboxes = Combobox.all
 
-    render json: @comboboxes, methods: :hello
+    render json: @comboboxes, include: [:kind, :phones, :address]
   end
 
   # GET /comboboxes/1
   def show
-    render json: @combobox
+    render json: @combobox, include: [:kind, :phones, :address]
   end
 
   # POST /comboboxes
@@ -18,7 +18,7 @@ class ComboboxesController < ApplicationController
     @combobox = Combobox.new(combobox_params)
 
     if @combobox.save
-      render json: @combobox, status: :created, location: @combobox
+      render json: @combobox, include: [:kind, :phones, :address], status: :created, location: @combobox
     else
       render json: @combobox.errors, status: :unprocessable_entity
     end
@@ -27,7 +27,7 @@ class ComboboxesController < ApplicationController
   # PATCH/PUT /comboboxes/1
   def update
     if @combobox.update(combobox_params)
-      render json: @combobox
+      render json: @combobox, include: [:kind, :phones, :address]
     else
       render json: @combobox.errors, status: :unprocessable_entity
     end
@@ -46,6 +46,11 @@ class ComboboxesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def combobox_params
-      params.require(:combobox).permit(:cnpj, :contract, :campaign, :kind_id)
+      params.require(:combobox).permit(
+        :cnpj, :contract, 
+        :campaign, :kind_id,
+        phones_attributes: [:id, :number, :_destroy],
+        address_attributes: [:id, :city, :street]
+        )
     end
 end
